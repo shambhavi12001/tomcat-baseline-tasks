@@ -17,6 +17,7 @@ from .utils import TAPPED, UNTAPPED
 
 
 class ServerFingerTappingTask:
+
     def __init__(self, to_client_connections: list, from_client_connections: dict) -> None:
         self._to_client_connections = to_client_connections
         self._from_client_connections = from_client_connections
@@ -48,6 +49,7 @@ class ServerFingerTappingTask:
 
         self._running = False
 
+    
     def run(self):
         self._running = True
 
@@ -102,7 +104,7 @@ class ServerFingerTappingTask:
 
             # Record state of the game
             if session_index >= 0:
-                self._csv_writer.writerow([time(), json.dumps(data)])
+                self._csv_writer.writerow([time(), time.monotonic(), json.dumps(data)])
 
             send(self._to_client_connections, data)
 
