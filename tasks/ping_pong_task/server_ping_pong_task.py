@@ -16,6 +16,7 @@ from .utils import (BALL_SIZE, LEFT_TEAM, RIGHT_TEAM, WINDOW_HEIGHT,
 
 
 class ServerPingPongTask:
+
     def __init__(self, to_client_connections: list, from_client_connection_teams: dict, easy_mode: bool = True, session_name: str = '') -> None:
         self._to_client_connections = to_client_connections
 
@@ -234,7 +235,7 @@ class ServerPingPongTask:
             data["seconds"] = 1 if seconds_to_send <= 0 else seconds_to_send
 
             # Record state of the game
-            self._csv_writer.writerow([time(), json.dumps(data)])
+            self._csv_writer.writerow([time(), time.monotonic(), json.dumps(data)])
 
             send(self._to_client_connections, data)
 
