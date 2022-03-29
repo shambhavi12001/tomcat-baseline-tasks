@@ -15,6 +15,7 @@ from .utils import get_image_paths
 
 
 class ServerAffectiveTask:
+
     def __init__(self, to_client_connections: list, from_client_connections: dict) -> None:
         self._to_client_connections = to_client_connections
         self._from_client_connections = from_client_connections
@@ -96,9 +97,10 @@ class ServerAffectiveTask:
 
             # record clients' responses
             current_time = time()
+            monotonic_time = time.monotonic()
             for client_name, response in responses.items():
                 if response["type"] == "rating":
-                    self._csv_writer.writerow([current_time, image_path, client_name, json.dumps(response["rating"])])
+                    self._csv_writer.writerow([current_time, monotonic_time, image_path, client_name, json.dumps(response["rating"])])
                 else:
                     raise RuntimeError("Cannot handle message type: " + response["type"])
 
